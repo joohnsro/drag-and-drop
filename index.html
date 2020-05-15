@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag&Drop</title>
+    <style type="text/css">
+        #container {
+            width: 1000px;
+            height: 350px;
+            background-color: #eaeaea;
+            position: relative;
+        }
+        
+        .draggable {
+            width: 100px;
+            height: 100px;
+            cursor: grab;
+            background-color: green;
+            position: absolute;
+            z-index: 2;
+            transition: opacity .2s;
+        }
+
+        .draggable.dragged {
+            cursor: grabbing;
+        }
+
+        .draggable.dropped {
+            cursor: default;
+            opacity: 0;
+        }
+
+        .action {
+            width: 200px;
+            height: 200px;
+            background-color: #cccccc;
+            position: absolute;
+            top: 30px;
+            right: 50px;
+            z-index: 1;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <div id="draggable" class="draggable"></div>
+        <div id="draggableAction" class="action"></div>
+    </div>
+
+    <script type="text/javascript" src="scripts.js"></script>
+    <script>
+        var draggable1 = createDraggableObject( 'draggable' );
+        draggable1.addActionOnPlace( 'draggableAction', function(){
+            draggable.classList.add( 'dropped' );
+        } );
+        draggable1.start();
+    </script>
+</body>
+</html>
