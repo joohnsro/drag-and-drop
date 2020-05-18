@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag&Drop</title>
+    <style type="text/css">
+        *[dragged=false] {
+            cursor: grab !important;
+        }
+
+        *[dragged=true] {
+            cursor: grabbing !important;
+        }
+
+        #app {
+            width: 700px;
+            height: 300px;
+            background-color: #cccccc;
+            position: relative;
+        }
+        
+        #container {
+            display: block;
+            width: 100px;
+            height: 200px;
+            position: absolute;
+            top: 50px;
+            left: 300px;
+        }
+        
+        .draggable {
+            display: block;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            opacity: .4;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            z-index: 3;
+            transition: opacity .2s;
+            cursor: grab;
+        }
+
+        .draggable.dropped {
+            opacity: 0;
+        }
+
+        .action {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 2;
+            background-color: blue;
+            opacity: .2;
+        }
+
+        .action2 {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 100px;
+            left: 0;
+            z-index: 2;
+            background-color: red;
+            opacity: .2;
+        }
+
+        .engrenagem {
+            position: absolute;
+            top: 50px;
+            left: 300px;
+            width: 100px;
+            height: 200px;
+            overflow: hidden;
+            z-index: 0;
+        }
+
+        .engrenagem img {
+            position: absolute;
+            right: 0;
+            height: 100%;
+            transition: transform 2s;
+            z-index: 0;
+        }
+
+        .engrenagem img.roll {
+            -moz-transform: rotate(-180deg);
+            -webkit-transform: rotate(-180deg);
+            transform: rotate(-180deg);
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="container">
+            <div id="draggable" class="draggable"></div>
+            <div id="draggableAction" class="action"></div>
+            <div id="draggableAction2" class="action2"></div>
+        </div>        
+        <div class="engrenagem"><img src="engrenagem.png"></div>
+    </div>    
+
+    <script type="text/javascript" src="dist/draganddrop.js"></script>
+    <script>
+        var engrenagem = document.querySelector( '.engrenagem img' );
+        var action = document.getElementById( 'draggableAction' );
+        var action2 = document.getElementById( 'draggableAction2' );
+        var dragObj = new DraggableObject( document.querySelector('#draggable'), [{
+                element: action, 
+                callback: function(){
+                    engrenagem.classList.add( 'roll' );
+                }
+            }, {
+                element: action2, 
+                callback: function(){
+                    if ( engrenagem.classList.contains( 'roll' ) ) {
+                        engrenagem.classList.remove( 'roll' );
+                    }
+                }
+            }] );
+
+    </script>
+</body>
+</html>

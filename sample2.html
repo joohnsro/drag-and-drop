@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drag&Drop</title>
+    <style type="text/css">
+        *[dragged=false] {
+            cursor: grab !important;
+        }       
+
+        *[dragged=true] {
+            cursor: grabbing !important;
+        }
+
+        #app {
+            width: 700px;
+            height: 300px;
+            background-color: #cccccc;
+            position: relative;
+        }
+        
+        .draggable {
+            display: block;
+            width: 100px;
+            height: 100px;
+            background-color: green;
+            opacity: .4;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            transition: opacity .2s, background-color .2s, transform .2s;
+            cursor: grab;
+        }
+
+        .reduce {
+            opacity: 1;
+            background-color: red;
+            transform: scale(0);
+        }
+
+        .draggable.dropped {
+            opacity: 0;
+        }
+
+        .action {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 100px;
+            left: 400px;
+            z-index: 2;
+            background-color: blue;
+            opacity: .2;
+        }
+
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div id="draggable" class="draggable"></div>
+        <div id="draggableAction" class="action"></div>
+    </div>    
+
+    <script type="text/javascript" src="dist/draganddrop.js"></script>
+    <script>
+        var action = document.getElementById( 'draggableAction' );
+        var element = document.querySelector('#draggable');
+        var dragObj = new DraggableObject( element, [{
+                element: action, 
+                callback: function(){
+                    element.classList.add('reduce');
+                }
+            }] );
+
+    </script>
+</body>
+</html>
