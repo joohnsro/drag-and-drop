@@ -17,7 +17,6 @@
             width: 700px;
             height: 300px;
             background-color: #cccccc;
-            opacity: .8;
             position: relative;
         }
         
@@ -30,7 +29,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 90000;
+            z-index: 3;
             transition: opacity .2s, background-color .2s, transform .2s;
             cursor: grab;
         }
@@ -39,6 +38,11 @@
             opacity: 1;
             background-color: red;
             transform: scale(0);
+        }
+        .grow {
+            opacity: 0;
+            background-color: red;
+            transform: scale(2);
         }
 
         .draggable.dropped {
@@ -55,25 +59,43 @@
             background-color: blue;
             opacity: .2;
         }
+        .action2 {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 200px;
+            left: 100px;
+            z-index: 2;
+            background-color: yellow;
+            opacity: .2;
+        }
+
     </style>
 </head>
 <body>
-    <h1>Drag & Drop</h1>
+    <h1>Drag & Hover</h1>
     <div id="app">
         <div id="draggable" class="draggable"></div>
         <div id="draggableAction" class="action"></div>
+        <div id="draggableAction2" class="action2"></div>
     </div>    
 
     <script type="text/javascript" src="dist/draganddrop.js"></script>
     <script>
         var action = document.getElementById( 'draggableAction' );
+        var action2 = document.getElementById( 'draggableAction2' );
         var element = document.querySelector('#draggable');
         var dragObj = new DraggableObject( element, [{
                 element: action, 
                 callback: function(){
                     element.classList.add('reduce');
                 }
-            }] );
+            }, {
+                element: action2,
+                callback: function(){
+                    element.classList.add('grow');
+                }
+            }], false );
     </script>
 </body>
 </html>
